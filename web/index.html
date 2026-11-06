@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>量化选股系统</title>
+<link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+<div id="login-mask" class="login-mask">
+  <div class="login-box">
+    <h2>量化选股系统</h2>
+    <p class="login-tip">请输入访问密码</p>
+    <input type="password" id="login-pw" placeholder="密码" autocomplete="current-password">
+    <button id="login-btn" class="btn primary block">登 录</button>
+    <p id="login-err" class="login-err"></p>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="brand">量化选股系统</div>
+  <nav id="nav">
+    <a href="#hotlist" data-page="hotlist">热榜</a>
+    <a href="#screen" data-page="screen">条件选股</a>
+    <a href="#pattern" data-page="pattern">形态匹配</a>
+    <a href="#quote" data-page="quote">行情</a>
+    <a href="#calendar" data-page="calendar">财经日历</a>
+    <a href="#watchlist" data-page="watchlist">自选池</a>
+    <a href="#manage" data-page="manage">数据管理</a>
+  </nav>
+  <button id="logout-btn" class="btn ghost small">退出</button>
+</header>
+
+<main id="main">
+
+  <section id="page-hotlist" class="page">
+    <div class="page-head">
+      <h2>盘前信息热榜</h2>
+      <div class="head-actions">
+        <span id="hotlist-meta" class="muted small"></span>
+        <select id="hotlist-cat" class="input small"></select>
+        <button id="hotlist-refresh" class="btn">抓取最新</button>
+      </div>
+    </div>
+    <div class="cols-2">
+      <div id="hotlist-list" class="card news-list"></div>
+      <div class="side">
+        <div class="card">
+          <h3>今日重要日程</h3>
+          <div id="hotlist-today-events"></div>
+        </div>
+        <div class="card">
+          <h3>数据状态</h3>
+          <div id="hotlist-data-state"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="page-screen" class="page" style="display:none">
+    <div class="page-head">
+      <h2>条件选股</h2>
+      <div class="head-actions">
+        <select id="strategy-select" class="input"><option value="">载入已存策略…</option></select>
+        <button id="strategy-del" class="btn ghost small">删除策略</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>指标库 <span class="muted small">（点击添加条件）</span></h3>
+      <div id="cond-chips" class="chips"></div>
+    </div>
+    <div class="card">
+      <div class="row-between">
+        <h3>已添加条件 <span id="cond-count" class="muted small"></span></h3>
+        <label class="toggle">
+          <span>组合关系：</span>
+          <button id="logic-toggle" class="btn small">且（全部满足）</button>
+        </label>
+      </div>
+      <div id="cond-list"></div>
+      <div class="row-between" style="margin-top:12px">
+        <label class="muted small"><input type="checkbox" id="exclude-st" checked> 剔除ST/退市股</label>
+        <div class="head-actions">
+          <input type="text" id="strategy-name" class="input small" placeholder="策略名称">
+          <button id="strategy-save" class="btn">保存策略</button>
+          <button id="screen-run" class="btn primary">开始筛选</button>
+        </div>
+      </div>
+    </div>
+    <div id="screen-result" class="card" style="display:none">
+      <h3>筛选结果 <span id="screen-result-meta" class="muted small"></span></h3>
+      <div id="screen-table"></div>
+    </div>
+  </section>
+
+  <section id="page-pattern" class="page" style="display:none">
+    <div class="page-head">
+      <h2>K线形态匹配</h2>
+    </div>
+    <div class="card">
+      <h3>① 提供模板</h3>
+      <div class="tabs" id="pattern-tabs">
+        <button data-tab="select" class="tab active">行情页框选</button>
+        <button data-tab="upload" class="tab">上传截图</button>
+      </div>
+      <div id="pattern-tab-select">
+        <p class="muted small">到「<a href="#quote" class="link">行情</a>」页打开任意股票，在K线图上按住鼠标拖选一段，点「用此段匹配」即可。</p>
+        <div id="pattern-template-preview"></div>
+      </div>
+      <div id="pattern-tab-upload" style="display:none">
+        <p class="muted small">上传清晰的普通K线截图（红涨绿跌），自动粗略识别走势。精度有限，仅供参考。</p>
+        <input type="file" id="pattern-file" accept="image/*">
+        <div id="pattern-upload-preview"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>② 匹配设置</h3>
+      <div class="form-grid">
+        <label>匹配范围
+          <select id="pattern-scope" class="input">
+            <option value="recent">各股最近一段（找“正在走出该形态”的股票）</option>
+            <option value="any">近半年任意时段（历史复盘）</option>
+          </select>
+        </label>
+        <label>返回数量
+          <input type="number" id="pattern-top" class="input" value="30" min="5" max="100">
+        </label>
+        <label class="check-line"><input type="checkbox" id="pattern-vol"> 同时匹配成交量节奏</label>
+        <label class="check-line"><input type="checkbox" id="pattern-exst" checked> 剔除ST/退市股</label>
+      </div>
+      <button id="pattern-run" class="btn primary">开始匹配</button>
+      <span id="pattern-status" class="muted small"></span>
+    </div>
+    <div id="pattern-result"></div>
+  </section>
+
+  <section id="page-quote" class="page" style="display:none">
+    <div class="page-head">
+      <h2>个股行情</h2>
+      <div class="head-actions">
+        <div class="search-box">
+          <input type="text" id="quote-search" class="input" placeholder="输入代码或名称搜索…" autocomplete="off">
+          <div id="quote-suggest" class="suggest" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row-between">
+        <h3 id="quote-title">—</h3>
+        <button id="quote-brush-match" class="btn primary" style="display:none">用此段匹配形态</button>
+      </div>
+      <p class="muted small">提示：在下方K线图上按住鼠标左键拖动即可框选一段K线（再次拖动可重新选择）。</p>
+      <div id="quote-chart" class="chart-lg"></div>
+    </div>
+  </section>
+
+  <section id="page-calendar" class="page" style="display:none">
+    <div class="page-head">
+      <h2>财经日历 <span id="cal-range" class="muted small"></span></h2>
+      <div class="head-actions">
+        <select id="cal-region" class="input small">
+          <option value="">全部地区</option><option value="CN">国内</option><option value="US">海外</option>
+        </select>
+        <select id="cal-imp" class="input small">
+          <option value="0">全部重要性</option><option value="1">★以上</option>
+          <option value="2">★★以上</option><option value="3">仅★★★</option>
+        </select>
+        <button id="cal-prev" class="btn small">上月</button>
+        <button id="cal-today" class="btn small">今天</button>
+        <button id="cal-next" class="btn small">下月</button>
+        <button id="cal-refresh" class="btn">刷新日历</button>
+        <button id="cal-add" class="btn">添加事件</button>
+      </div>
+    </div>
+    <div class="card">
+      <div id="cal-grid" class="cal-grid"></div>
+    </div>
+    <div class="card">
+      <h3>日程列表 <span id="cal-list-meta" class="muted small"></span></h3>
+      <div id="cal-list"></div>
+    </div>
+    <div id="cal-add-form" class="card" style="display:none">
+      <div class="form-grid">
+        <label>日期 <input type="date" id="cal-f-date" class="input"></label>
+        <label>时间(可空) <input type="text" id="cal-f-time" class="input" placeholder="如 20:30"></label>
+        <label>地区
+          <select id="cal-f-region" class="input"><option value="CN">国内</option><option value="US">海外</option></select>
+        </label>
+        <label>重要性
+          <select id="cal-f-imp" class="input"><option value="1">★</option><option value="2">★★</option><option value="3">★★★</option></select>
+        </label>
+        <label class="span2">标题 <input type="text" id="cal-f-title" class="input" placeholder="如 英伟达财报"></label>
+      </div>
+      <div class="head-actions"><button id="cal-f-save" class="btn primary">保存</button></div>
+    </div>
+  </section>
+
+  <section id="page-watchlist" class="page" style="display:none">
+    <div class="page-head"><h2>自选池</h2></div>
+    <div id="watchlist-wrap" class="card"></div>
+  </section>
+
+  <section id="page-manage" class="page" style="display:none">
+    <div class="page-head">
+      <h2>数据管理</h2>
+    </div>
+    <div id="manage-stats" class="stat-grid"></div>
+    <div class="card">
+      <h3>数据抓取</h3>
+      <div class="head-actions">
+        <button id="fetch-inc" class="btn primary">增量更新（每天收盘后自动）</button>
+        <button id="fetch-full" class="btn danger">全量重抓（清空后重新抓取）</button>
+      </div>
+      <div id="fetch-progress" style="display:none">
+        <div class="progress"><div id="fetch-bar" class="progress-bar"></div></div>
+        <p id="fetch-msg" class="muted small"></p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>定时任务（每天自动执行）</h3>
+      <div id="manage-jobs" class="muted small"></div>
+      <div class="head-actions">
+        <button data-job="calendar" class="btn job-btn">立即刷新日历</button>
+        <button data-job="news" class="btn job-btn">立即抓取热榜</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="/static/vendor/echarts.min.js"></script>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/screen.js"></script>
+<script src="/static/js/pattern.js"></script>
+<script src="/static/js/quote.js"></script>
+<script src="/static/js/calendar.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>

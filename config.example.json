@@ -1,0 +1,9 @@
+{
+  "password": "123456",
+  "port": 8787,
+  "fetch_threads": 6,
+  "history_days": 140,
+  "news_time": "07:40",
+  "quotes_time": "16:10",
+  "calendar_time": "06:30"
+}

@@ -1,0 +1,49 @@
+# ---------- 运行时数据（行情库体积大，不入库） ----------
+data/
+*.db
+*.db-shm
+*.db-wal
+
+# ---------- 本地配置（含访问密码，因人而异） ----------
+config.json
+
+# ---------- 本地工作目录（内部笔记，不公开） ----------
+.workbuddy/
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.venv/
+venv/
+env/
+ENV/
+
+# ---------- 测试与工具缓存 ----------
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# ---------- IDE / 编辑器 ----------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---------- 系统 ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------- 日志与临时文件 ----------
+*.log
+logs/
+tmp/
