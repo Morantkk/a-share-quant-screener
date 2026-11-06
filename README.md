@@ -37,6 +37,10 @@
 
 ![自选池](docs/screenshots/06-watchlist.png)
 
+### 数据管理 —— 手动触发抓取 / 热榜 / 日历，也可查看数据状态
+
+![数据管理](docs/screenshots/07-data.png)
+
 ---
 
 ## 功能
