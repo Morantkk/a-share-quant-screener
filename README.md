@@ -18,33 +18,36 @@
 
 ## 界面预览
 
+> 截图托管在 jsDelivr CDN（国内网络可直接显示），原图同时保存在仓库 [`docs/screenshots/`](docs/screenshots/) 目录。
+> 若图片仍不显示，通常是网络问题——可直接打开仓库里的原图文件查看。
+
 ### 条件选股 —— 点击积木块组合条件，全市场筛选
 
-![条件选股](docs/screenshots/02-screener.png)
+![条件选股](https://cdn.jsdelivr.net/gh/Morantkk/a-share-quant-screener@main/docs/screenshots/02-screener.png)
 
 ### K 线形态匹配 —— 用一段 K 线去找"正在走出相同形态"的股票
 
-![形态匹配](docs/screenshots/04-pattern.png)
+![形态匹配](https://cdn.jsdelivr.net/gh/Morantkk/a-share-quant-screener@main/docs/screenshots/04-pattern.png)
 
 ### 盘前信息热榜 —— 多源快讯去重、分类、按权重打分排序
 
-![盘前热榜](docs/screenshots/01-hotlist.png)
+![盘前热榜](https://cdn.jsdelivr.net/gh/Morantkk/a-share-quant-screener@main/docs/screenshots/01-hotlist.png)
 
 ### 个股行情 —— K 线 / 成交量 / 均线，可在图上框选一段作为形态模板
 
-![个股行情](docs/screenshots/03-quote.png)
+![个股行情](https://cdn.jsdelivr.net/gh/Morantkk/a-share-quant-screener@main/docs/screenshots/03-quote.png)
 
 ### 财经日历 —— 未来 1~2 个月国内外重要事件
 
-![财经日历](docs/screenshots/05-calendar.png)
+![财经日历](https://cdn.jsdelivr.net/gh/Morantkk/a-share-quant-screener@main/docs/screenshots/05-calendar.png)
 
 ### 自选池
 
-![自选池](docs/screenshots/06-watchlist.png)
+![自选池](https://cdn.jsdelivr.net/gh/Morantkk/a-share-quant-screener@main/docs/screenshots/06-watchlist.png)
 
 ### 数据管理 —— 手动触发抓取 / 热榜 / 日历，也可查看数据状态
 
-![数据管理](docs/screenshots/07-data.png)
+![数据管理](https://cdn.jsdelivr.net/gh/Morantkk/a-share-quant-screener@main/docs/screenshots/07-data.png)
 
 ---
 
